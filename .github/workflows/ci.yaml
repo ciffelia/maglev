@@ -41,3 +41,24 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm run lint
+
+  cf-typegen:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run cf-typegen
+
+      - name: Check diff
+        run: |
+          git add --intent-to-add .
+          git diff --exit-code
