@@ -2,5 +2,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
   },
+  "eslint.rules.customizations": [
+    { "rule": "perfectionist/*", "severity": "off" }
+  ],
   "eslint.codeActionsOnSave.rules": ["perfectionist/*"]
 }
