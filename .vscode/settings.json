@@ -5,5 +5,6 @@
   "eslint.rules.customizations": [
     { "rule": "perfectionist/*", "severity": "off" }
   ],
-  "eslint.codeActionsOnSave.rules": ["perfectionist/*"]
+  "eslint.codeActionsOnSave.rules": ["perfectionist/*"],
+  "prettier.trailingComma": "all"
 }
