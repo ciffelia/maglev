@@ -5,7 +5,7 @@ import reactLogo from "./assets/react.svg";
 
 import viteLogo from "/vite.svg";
 
-import "./App.css";
+import "./app.css";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,7 +32,9 @@ function App() {
       <div className="card">
         <button
           aria-label="increment"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={() => {
+            setCount((count) => count + 1);
+          }}
         >
           count is {count}
         </button>
@@ -44,9 +46,12 @@ function App() {
         <button
           aria-label="get name"
           onClick={() => {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             fetch("/api/")
               .then((res) => res.json() as Promise<{ name: string }>)
-              .then((data) => setName(data.name));
+              .then((data) => {
+                setName(data.name);
+              });
           }}
         >
           Name from API is: {name}
