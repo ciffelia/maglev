@@ -7,10 +7,7 @@
   "name": "matrep",
   "main": "src/backend/index.ts",
   "compatibility_date": "2025-03-17",
-  "assets": {
-    "not_found_handling": "single-page-application",
-    "binding": "ASSETS",
-  },
+  "assets": {},
   "observability": {
     "enabled": true,
   },
