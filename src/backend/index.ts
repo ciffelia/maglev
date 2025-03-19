@@ -1,13 +1,13 @@
-export default {
-  fetch(request, env) {
-    const url = new URL(request.url);
+import { Hono } from "hono";
 
-    if (url.pathname.startsWith("/api/")) {
-      return Response.json({
-        name: "Cloudflare",
-      });
-    }
+const app = new Hono<{ Bindings: Env }>();
 
-    return env.ASSETS.fetch(request);
-  },
-} satisfies ExportedHandler<Env>;
+app.all("/api/*", (c) => {
+  return c.json({ name: "Cloudflare" });
+});
+
+app.all("*", (c) => {
+  return c.env.ASSETS.fetch(c.req.raw);
+});
+
+export default app satisfies ExportedHandler<Env>;

@@ -3,6 +3,8 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.worker.tsbuildinfo",
 
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
     "lib": ["ESNext"],
 
     "types": ["./worker-configuration.d.ts", "vite/client"],
