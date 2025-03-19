@@ -2,7 +2,7 @@ import { Hono } from "hono";
 
 const app = new Hono<{ Bindings: Env }>();
 
-app.all("/api/*", (c) => {
+app.get("/api/ping", (c) => {
   return c.json({ name: "Cloudflare" });
 });
 
