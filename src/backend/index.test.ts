@@ -14,6 +14,45 @@ const createClient = (ctx: ExecutionContext) => {
   return hc<AppType>("https://example.com", { fetch });
 };
 
+const testAuthErrors = (method: string, url: string) => {
+  it("responds missing token error", async () => {
+    const ctx = createExecutionContext();
+
+    const response = await worker.request(
+      new URL(url, `https://example.com`),
+      { method },
+      env,
+      ctx,
+    );
+
+    await waitOnExecutionContext(ctx);
+
+    expect(response.status).toBe(401);
+    expect(await response.text()).toBe("Missing token");
+  });
+
+  it("responds invalid token error", async () => {
+    const ctx = createExecutionContext();
+
+    const response = await worker.request(
+      new URL(url, `https://example.com`),
+      {
+        headers: {
+          Authorization: `Bearer invalid-token`,
+        },
+        method,
+      },
+      env,
+      ctx,
+    );
+
+    await waitOnExecutionContext(ctx);
+
+    expect(response.status).toBe(403);
+    expect(await response.text()).toBe("Invalid token");
+  });
+};
+
 const authHeaders = {
   Authorization: `Bearer ${env.MAGREV_TOKEN}`,
 };
@@ -33,33 +72,7 @@ describe("GET /api/ping", () => {
     expect(await response.json()).toStrictEqual({ name: "Cloudflare" });
   });
 
-  it("responds missing token error", async () => {
-    const ctx = createExecutionContext();
-    const client = createClient(ctx);
-
-    const response = await client.api.ping.$get();
-
-    await waitOnExecutionContext(ctx);
-
-    expect(response.status).toBe(401);
-    expect(await response.text()).toBe("Missing token");
-  });
-
-  it("responds invalid token error", async () => {
-    const ctx = createExecutionContext();
-    const client = createClient(ctx);
-
-    const response = await client.api.ping.$get(undefined, {
-      headers: {
-        Authorization: `Bearer invalid-token`,
-      },
-    });
-
-    await waitOnExecutionContext(ctx);
-
-    expect(response.status).toBe(403);
-    expect(await response.text()).toBe("Invalid token");
-  });
+  testAuthErrors("GET", "/api/ping");
 });
 
 describe("POST /api/v1/result", () => {
@@ -111,6 +124,8 @@ describe("POST /api/v1/result", () => {
 
     expect(response.status).toBe(400);
   });
+
+  testAuthErrors("POST", "/api/v1/result");
 });
 
 describe("GET /api/v1/run", () => {
@@ -215,4 +230,6 @@ describe("GET /api/v1/run", () => {
       },
     ]);
   });
+
+  testAuthErrors("GET", "/api/v1/run");
 });
