@@ -14,7 +14,7 @@ const createClient = (ctx: ExecutionContext) => {
   return hc<AppType>("https://example.com", { fetch });
 };
 
-describe("/api/ping", () => {
+describe("GET /api/ping", () => {
   it("responds with name", async () => {
     const ctx = createExecutionContext();
     const client = createClient(ctx);
@@ -27,6 +27,7 @@ describe("/api/ping", () => {
 
     await waitOnExecutionContext(ctx);
 
+    expect(response.status).toBe(200);
     expect(await response.json()).toStrictEqual({ name: "Cloudflare" });
   });
 
