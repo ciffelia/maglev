@@ -29,4 +29,32 @@ describe("/api/ping", () => {
 
     expect(await response.json()).toStrictEqual({ name: "Cloudflare" });
   });
+
+  it("responds missing token error", async () => {
+    const ctx = createExecutionContext();
+    const client = createClient(ctx);
+
+    const response = await client.api.ping.$get();
+
+    await waitOnExecutionContext(ctx);
+
+    expect(response.status).toBe(401);
+    expect(await response.text()).toBe("Missing token");
+  });
+
+  it("responds invalid token error", async () => {
+    const ctx = createExecutionContext();
+    const client = createClient(ctx);
+
+    const response = await client.api.ping.$get(undefined, {
+      headers: {
+        Authorization: `Bearer invalid-token`,
+      },
+    });
+
+    await waitOnExecutionContext(ctx);
+
+    expect(response.status).toBe(403);
+    expect(await response.text()).toBe("Invalid token");
+  });
 });
