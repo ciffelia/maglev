@@ -5,7 +5,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "magrev",
-  "main": "src/backend/index.ts",
+  "main": "packages/backend/src/index.ts",
   "compatibility_date": "2025-03-17",
   "assets": {
     "directory": "dist",
@@ -15,6 +15,7 @@
       "binding": "DB",
       "database_name": "magrev",
       "database_id": "b6d509ff-2c5a-4319-8e78-13f7759ccef4",
+      "migrations_dir": "packages/backend/migrations",
     },
   ],
   "observability": {

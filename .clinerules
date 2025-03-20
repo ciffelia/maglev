@@ -12,7 +12,7 @@ CI/CDのテスト実行基盤は、REST APIを通じてMagrevのバックエン�
 
 このアプリケーション全体では以下の技術を使用しています。
 
-- pnpm
+- pnpm workspace
 - TypeScript
 - ESLint
 - Prettier
@@ -21,22 +21,24 @@ CI/CDのテスト実行基盤は、REST APIを通じてMagrevのバックエン�
 
 ### フロントエンド
 
+- **パッケージ**: `@magrev/frontend`
 - **技術**: React 19, Vite
 - **構造**: シングルページアプリケーション（SPA）
-- **エントリーポイント**: `src/frontend/main.tsx`
+- **エントリーポイント**: `packages/frontend/src/frontend/main.tsx`
 
 ### バックエンド
 
+- **パッケージ**: `@magrev/backend`
 - **技術**: Cloudflare Workers, Hono, Drizzle ORM, Vite
-- **エントリーポイント**: `src/backend/index.ts`
+- **エントリーポイント**: `packages/backend/src/index.ts`
 
 ### データベース
 
 - **技術**: Cloudflare D1（SQLiteベース）
-- **スキーマ**: `src/backend/db/schema.ts`
+- **スキーマ**: `packages/backend/src/db/schema.ts`
 
 ## 開発における注意事項
 
 - このアプリケーションのフロントエンドおよびバックエンド開発サーバーは既にポート5173で起動しているはずです。改めて`pnpm run dev`を実行する必要はありません。もし開発サーバーが起動していないと思われる場合は、直ちにユーザーに確認してください。開発サーバーの再起動が必要な場合は、ユーザーに再起動を要求してください。
 - `wrangler.jsonc`や`.dev.vars`を編集してWorkersの設定を更新した際は、TypeScriptの型定義を更新するために`pnpm run cf-typegen`を実行してください。
-- DBスキーマ (`src/backend/db/schema.ts`) を編集した際は、マイグレーションファイルを生成するために`pnpm run migration:generate`を実行してください。マイグレーションファイルを生成したら、マイグレーションを適用するために`pnpm run migration:apply:local`を実行してください。
+- DBスキーマ (`schema.ts`) を編集した際は、マイグレーションファイルを生成するために`pnpm run migration:generate`を実行してください。マイグレーションファイルを生成したら、マイグレーションを適用するために`pnpm run migration:apply:local`を実行してください。

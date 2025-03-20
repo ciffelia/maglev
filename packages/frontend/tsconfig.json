@@ -1,7 +1,7 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/.tsbuildinfo",
 
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
@@ -14,5 +14,5 @@
 
     "skipLibCheck": true
   },
-  "include": ["src/frontend/**/*"]
+  "include": ["src/**/*"]
 }

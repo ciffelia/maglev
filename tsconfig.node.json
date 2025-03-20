@@ -13,9 +13,10 @@
     "skipLibCheck": true
   },
   "include": [
-    "drizzle.config.ts",
     "eslint.config.js",
     "vite.config.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "packages/*/vitest.config.ts",
+    "packages/backend/drizzle.config.ts"
   ]
 }
