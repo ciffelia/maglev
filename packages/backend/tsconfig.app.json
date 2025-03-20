@@ -7,7 +7,7 @@
     "jsxImportSource": "hono/jsx",
     "lib": ["ESNext"],
 
-    "types": ["./worker-configuration.d.ts", "vite/client"],
+    "types": ["vite/client", "./worker-configuration.d.ts"],
 
     "module": "Preserve",
     "moduleResolution": "bundler",
