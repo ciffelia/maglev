@@ -1,3 +1,6 @@
+import type { TypedHc } from "@magrev/backend/client";
+
+import { hc } from "hono/client";
 import { useState } from "react";
 
 import cloudflareLogo from "./assets/Cloudflare_Logo.svg";
@@ -8,6 +11,8 @@ import viteLogo from "/vite.svg";
 import "./app.css";
 
 function App() {
+  const client = (hc as unknown as TypedHc)("/");
+
   const [count, setCount] = useState(0);
   const [name, setName] = useState("unknown");
 
@@ -47,8 +52,9 @@ function App() {
           aria-label="get name"
           onClick={() => {
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            fetch("/api/ping")
-              .then((res) => res.json() as Promise<{ name: string }>)
+            client.api.ping
+              .$get()
+              .then((res) => res.json())
               .then((data) => {
                 setName(data.name);
               });

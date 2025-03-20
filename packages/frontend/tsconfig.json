@@ -14,5 +14,10 @@
 
     "skipLibCheck": true
   },
+  "references": [
+    {
+      "path": "../backend/tsconfig.app.json"
+    }
+  ],
   "include": ["src/**/*"]
 }

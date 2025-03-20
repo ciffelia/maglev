@@ -1,19 +1,15 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
-    "lib": ["ESNext"],
+    "composite": true,
+    "outDir": "dist",
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
 
-    "types": ["vite/client", "./worker-configuration.d.ts"],
-
-    "module": "Preserve",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-
-    "skipLibCheck": true
+    "types": ["vite/client", "./worker-configuration.d.ts"]
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test.*"]

@@ -13,7 +13,7 @@
     "migration:generate": "pnpm run --filter @magrev/backend migration:generate",
     "migration:apply:local": "wrangler d1 migrations apply magrev --local",
     "migration:apply:remote": "wrangler d1 migrations apply magrev --remote",
-    "typecheck": "tsc --build --noEmit",
+    "typecheck": "tsc --build",
     "lint": "pnpm run lint:eslint && pnpm run lint:prettier",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",

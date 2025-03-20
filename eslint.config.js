@@ -9,7 +9,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "**/worker-configuration.d.ts"] },
+  { ignores: ["**/dist", "**/worker-configuration.d.ts"] },
   {
     extends: [
       js.configs.recommended,
