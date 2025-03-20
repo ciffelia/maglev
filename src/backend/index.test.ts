@@ -129,4 +129,90 @@ describe("GET /api/v1/run", () => {
     const data = await response.json();
     expect(data).toStrictEqual([]);
   });
+
+  it("returns created runs", async () => {
+    const ctx = createExecutionContext();
+    const client = createClient(ctx);
+
+    const validData = [
+      {
+        duration: 1000,
+        run: {
+          commit: "abc123",
+          id: "run-123",
+          started_at: 1_742_397_129 + 86_400,
+        },
+        status: "success",
+        test_name: "test-1",
+      },
+      {
+        duration: 2000,
+        run: {
+          commit: "def456",
+          id: "run-123",
+          started_at: 1_742_397_129 + 86_400 * 2,
+        },
+        status: "failure",
+        test_name: "test-2",
+      },
+      {
+        duration: 3000,
+        run: {
+          commit: "ghi789",
+          id: "run-456",
+          started_at: 1_742_397_129,
+        },
+        status: "running",
+        test_name: "test-3",
+      },
+    ] as const;
+
+    for (const data of validData) {
+      await client.api.v1.result.$post(
+        { json: data },
+        { headers: authHeaders },
+      );
+    }
+
+    const response = await client.api.v1.run.$get(undefined, {
+      headers: authHeaders,
+    });
+
+    await waitOnExecutionContext(ctx);
+
+    expect(response.status).toBe(200);
+
+    const data = await response.json();
+    expect(data).toStrictEqual([
+      {
+        commit: "def456",
+        id: "run-123",
+        results: [
+          {
+            duration: 1000,
+            status: "success",
+            test_name: "test-1",
+          },
+          {
+            duration: 2000,
+            status: "failure",
+            test_name: "test-2",
+          },
+        ],
+        started_at: 1_742_397_129 + 86_400 * 2,
+      },
+      {
+        commit: "ghi789",
+        id: "run-456",
+        results: [
+          {
+            duration: 3000,
+            status: "running",
+            test_name: "test-3",
+          },
+        ],
+        started_at: 1_742_397_129,
+      },
+    ]);
+  });
 });
