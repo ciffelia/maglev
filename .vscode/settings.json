@@ -3,8 +3,12 @@
     "source.fixAll.eslint": "always"
   },
   "eslint.rules.customizations": [
-    { "rule": "perfectionist/*", "severity": "off" }
+    { "rule": "perfectionist/*", "severity": "off" },
+    { "rule": "unicorn/numeric-separators-style", "severity": "off" }
   ],
-  "eslint.codeActionsOnSave.rules": ["perfectionist/*"],
+  "eslint.codeActionsOnSave.rules": [
+    "perfectionist/*",
+    "unicorn/numeric-separators-style"
+  ],
   "prettier.trailingComma": "all"
 }
