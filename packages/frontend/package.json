@@ -4,6 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
-    "@magrev/backend": "workspace:*"
+    "@magrev/backend": "workspace:*",
+    "hono": "catalog:",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.11",
+    "@types/react-dom": "^19.0.4"
   }
 }
