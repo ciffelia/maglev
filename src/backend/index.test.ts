@@ -14,15 +14,17 @@ const createClient = (ctx: ExecutionContext) => {
   return hc<AppType>("https://example.com", { fetch });
 };
 
+const authHeaders = {
+  Authorization: `Bearer ${env.MAGREV_TOKEN}`,
+};
+
 describe("GET /api/ping", () => {
   it("responds with name", async () => {
     const ctx = createExecutionContext();
     const client = createClient(ctx);
 
     const response = await client.api.ping.$get(undefined, {
-      headers: {
-        Authorization: `Bearer ${env.MAGREV_TOKEN}`,
-      },
+      headers: authHeaders,
     });
 
     await waitOnExecutionContext(ctx);
@@ -78,11 +80,7 @@ describe("POST /api/v1/result", () => {
 
     const response = await client.api.v1.result.$post(
       { json: validData },
-      {
-        headers: {
-          Authorization: `Bearer ${env.MAGREV_TOKEN}`,
-        },
-      },
+      { headers: authHeaders },
     );
 
     await waitOnExecutionContext(ctx);
@@ -106,11 +104,7 @@ describe("POST /api/v1/result", () => {
     const response = await client.api.v1.result.$post(
       // @ts-expect-error intentionally invalid data
       { json: invalidData },
-      {
-        headers: {
-          Authorization: `Bearer ${env.MAGREV_TOKEN}`,
-        },
-      },
+      { headers: authHeaders },
     );
 
     await waitOnExecutionContext(ctx);
@@ -125,9 +119,7 @@ describe("GET /api/v1/run", () => {
     const client = createClient(ctx);
 
     const response = await client.api.v1.run.$get(undefined, {
-      headers: {
-        Authorization: `Bearer ${env.MAGREV_TOKEN}`,
-      },
+      headers: authHeaders,
     });
 
     await waitOnExecutionContext(ctx);
