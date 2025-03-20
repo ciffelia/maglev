@@ -16,20 +16,21 @@ CI/CDのテスト実行基盤は、REST APIを通じてMagrevのバックエン�
 - TypeScript
 - ESLint
 - Prettier
+- Vite
 
 アプリケーションの主要なコンポーネントは以下の通りです。なお、CI/CDのテスト実行基盤はこのアプリケーションに含まれていません。
 
 ### フロントエンド
 
 - **パッケージ**: `@magrev/frontend`
-- **技術**: React 19, Vite
+- **技術**: React 19, Hono RPC Client
 - **構造**: シングルページアプリケーション（SPA）
-- **エントリーポイント**: `packages/frontend/src/frontend/main.tsx`
+- **エントリーポイント**: `packages/frontend/src/main.tsx`
 
 ### バックエンド
 
 - **パッケージ**: `@magrev/backend`
-- **技術**: Cloudflare Workers, Hono, Drizzle ORM, Vite
+- **技術**: Cloudflare Workers, Hono, Drizzle ORM
 - **エントリーポイント**: `packages/backend/src/index.ts`
 
 ### データベース
