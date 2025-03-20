@@ -7,7 +7,9 @@
   "name": "magrev",
   "main": "src/backend/index.ts",
   "compatibility_date": "2025-03-17",
-  "assets": {},
+  "assets": {
+    "directory": "dist",
+  },
   "d1_databases": [
     {
       "binding": "DB",

@@ -8,6 +8,9 @@
 # Start development server
 pnpm run dev
 
+# Start vitest watch mode
+pnpm run test
+
 # Generate TypeScript types for Cloudflare Worker bindings
 pnpm run cf-typegen
 

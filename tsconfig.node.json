@@ -12,5 +12,10 @@
 
     "skipLibCheck": true
   },
-  "include": ["drizzle.config.ts", "eslint.config.js", "vite.config.ts"]
+  "include": [
+    "drizzle.config.ts",
+    "eslint.config.js",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ]
 }
