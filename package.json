@@ -1,5 +1,5 @@
 {
-  "name": "matrep",
+  "name": "magrev",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,8 +10,8 @@
     "deploy": "pnpm run build && wrangler deploy",
     "cf-typegen": "wrangler types",
     "migration:generate": "drizzle-kit generate",
-    "migration:apply:local": "wrangler d1 migrations apply matrep-prod --local",
-    "migration:apply:remote": "wrangler d1 migrations apply matrep-prod --remote",
+    "migration:apply:local": "wrangler d1 migrations apply magrev --local",
+    "migration:apply:remote": "wrangler d1 migrations apply magrev --remote",
     "typecheck": "tsc --build --noEmit",
     "lint": "pnpm run lint:eslint && pnpm run lint:prettier",
     "lint:eslint": "eslint .",

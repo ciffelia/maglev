@@ -4,15 +4,15 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "matrep",
+  "name": "magrev",
   "main": "src/backend/index.ts",
   "compatibility_date": "2025-03-17",
   "assets": {},
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "matrep-prod",
-      "database_id": "34b5afc0-16c2-41ec-8116-4ca9dd395010",
+      "database_name": "magrev",
+      "database_id": "b6d509ff-2c5a-4319-8e78-13f7759ccef4",
     },
   ],
   "observability": {
