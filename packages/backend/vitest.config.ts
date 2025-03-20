@@ -18,7 +18,7 @@ export default defineWorkersProject(async () => {
           wrangler: { configPath: "../../wrangler.jsonc" },
         },
       },
-      setupFiles: ["src/test/setup.ts"],
+      setupFiles: ["test/setup.ts"],
     },
   };
 });
