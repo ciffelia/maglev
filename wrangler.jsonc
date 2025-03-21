@@ -7,6 +7,7 @@
   "name": "maglev",
   "main": "packages/backend/src/index.ts",
   "compatibility_date": "2025-03-17",
+
   "assets": {
     "directory": "dist",
   },
@@ -18,11 +19,14 @@
       "migrations_dir": "packages/backend/migrations",
     },
   ],
-  "observability": {
-    "enabled": true,
-  },
   "vars": {
     "GITHUB_REPO_URL": "https://github.com/ciffelia/maglev",
+  },
+
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
   },
 
   /**
