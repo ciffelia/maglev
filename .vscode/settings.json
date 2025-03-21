@@ -2,6 +2,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
   },
+  "eslint.options": {
+    // Workaround for https://github.com/microsoft/vscode-eslint/issues/1938
+    "fixTypes": ["problem", "suggestion", "layout"]
+  },
   "eslint.rules.customizations": [
     { "rule": "perfectionist/*", "severity": "off" },
     { "rule": "unicorn/numeric-separators-style", "severity": "off" }
