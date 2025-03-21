@@ -63,7 +63,7 @@ export const RunsTable: React.FC<{
       <Table aria-label="Test runs" stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ width: "max-content" }} />
+            <TableCell />
             <TableCell>Commit</TableCell>
             {testNameList.map((testName, i) => (
               <TableCell align="center" key={testName}>
@@ -71,7 +71,7 @@ export const RunsTable: React.FC<{
                   <Box
                     onClick={toggleTestNameExpanded}
                     sx={{ cursor: "pointer" }}
-                    width="max-content"
+                    whiteSpace="nowrap"
                   >
                     {isTestNameExpanded ? testName : i}
                   </Box>
@@ -84,7 +84,7 @@ export const RunsTable: React.FC<{
           {runs.map((run) => (
             <TableRow hover key={run.id}>
               <TableCell>
-                <Box width="max-content">
+                <Box whiteSpace="nowrap">
                   {format(
                     new Date(run.started_at * 1000),
                     "yyyy-MM-dd HH:mm:ss",
@@ -95,7 +95,7 @@ export const RunsTable: React.FC<{
                 </Box>
               </TableCell>
               <TableCell>
-                <Box width="max-content">
+                <Box whiteSpace="nowrap">
                   {run.commit.slice(0, 7)}
                   <IconButton aria-label="Commit" color="inherit" size="large">
                     <CommitIcon />
@@ -111,7 +111,6 @@ export const RunsTable: React.FC<{
                         sx={{
                           display: "flex",
                           flexDirection: "column",
-                          gap: 0.5,
                         }}
                       >
                         <StatusIcon status={result.status} />
@@ -142,21 +141,21 @@ const StatusIcon = ({
     case "failure": {
       return (
         <Box sx={{ color: "error.main" }}>
-          <ErrorIcon fontSize="small" />
+          <ErrorIcon />
         </Box>
       );
     }
     case "running": {
       return (
         <Box sx={{ color: "info.main" }}>
-          <SyncIcon fontSize="small" />
+          <SyncIcon />
         </Box>
       );
     }
     case "success": {
       return (
         <Box sx={{ color: "success.main" }}>
-          <CheckCircleIcon fontSize="small" />
+          <CheckCircleIcon />
         </Box>
       );
     }
