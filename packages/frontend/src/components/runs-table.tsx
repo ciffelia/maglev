@@ -1,13 +1,15 @@
 import type React from "react";
 
 import {
+  CheckCircle as CheckCircleIcon,
   Commit as CommitIcon,
+  Error as ErrorIcon,
   InfoOutlined as InfoOutlinedIcon,
   Notes as NotesIcon,
+  Sync as SyncIcon,
 } from "@mui/icons-material";
 import {
   Box,
-  Chip,
   IconButton,
   Paper,
   Table,
@@ -21,6 +23,8 @@ import {
 import { format } from "date-fns";
 
 import type { useRuns } from "../api/use-runs";
+
+import { unreachable } from "../util";
 
 export const RunsTable: React.FC<{
   runs: Exclude<ReturnType<typeof useRuns>["data"], undefined>;
@@ -54,7 +58,9 @@ export const RunsTable: React.FC<{
             <TableCell />
             <TableCell>Commit</TableCell>
             {testNameList.map((testName) => (
-              <TableCell key={testName}>{testName}</TableCell>
+              <TableCell align="center" key={testName}>
+                {testName}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -76,7 +82,7 @@ export const RunsTable: React.FC<{
               {testNameList.map((testName) => {
                 const result = run.results[testName];
                 return (
-                  <TableCell key={testName}>
+                  <TableCell align="center" key={testName}>
                     {result ? (
                       <Box
                         sx={{
@@ -85,7 +91,7 @@ export const RunsTable: React.FC<{
                           gap: 0.5,
                         }}
                       >
-                        <StatusChip status={result.status} />
+                        <StatusIcon status={result.status} />
                         {result.duration !== null && (
                           <Typography color="text.secondary" variant="caption">
                             {result.duration}ms
@@ -106,36 +112,35 @@ export const RunsTable: React.FC<{
   );
 };
 
-const StatusChip = ({
+const StatusIcon = ({
   status,
 }: {
   status: "failure" | "running" | "success";
 }) => {
-  let color: "error" | "info" | "success";
-  let label: string;
-
   switch (status) {
     case "failure": {
-      color = "error";
-      label = "失敗";
-      break;
+      return (
+        <Box sx={{ color: "error.main" }}>
+          <ErrorIcon fontSize="small" />
+        </Box>
+      );
     }
     case "running": {
-      color = "info";
-      label = "実行中";
-      break;
+      return (
+        <Box sx={{ color: "info.main" }}>
+          <SyncIcon fontSize="small" />
+        </Box>
+      );
     }
     case "success": {
-      color = "success";
-      label = "成功";
-      break;
+      return (
+        <Box sx={{ color: "success.main" }}>
+          <CheckCircleIcon fontSize="small" />
+        </Box>
+      );
     }
     default: {
-      color = "info";
-      label = status;
-      break;
+      return unreachable(status);
     }
   }
-
-  return <Chip color={color} label={label} size="small" />;
 };
