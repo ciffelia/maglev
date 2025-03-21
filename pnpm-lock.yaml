@@ -102,7 +102,7 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.0
         version: 11.14.0(@emotion/react@11.14.0(@types/react@19.0.12)(react@19.0.0))(@types/react@19.0.12)(react@19.0.0)
-      '@magrev/backend':
+      '@maglev/backend':
         specifier: workspace:*
         version: link:../backend
       '@mui/icons-material':

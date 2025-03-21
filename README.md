@@ -1,6 +1,6 @@
-# Magrev
+# Maglev
 
-[![CI status](https://github.com/ciffelia/magrev/actions/workflows/ci.yaml/badge.svg)](https://github.com/ciffelia/magrev/actions/workflows/ci.yaml)
+[![CI status](https://github.com/ciffelia/maglev/actions/workflows/ci.yaml/badge.svg)](https://github.com/ciffelia/maglev/actions/workflows/ci.yaml)
 
 ## Development
 

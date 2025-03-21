@@ -6,7 +6,7 @@ interface UseAuth {
 }
 
 export const useAuth = (): UseAuth => {
-  const [token, setToken] = useLocalStorage("magrev-token");
+  const [token, setToken] = useLocalStorage("maglev-token");
   return { setToken, token };
 };
 

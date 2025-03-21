@@ -1,4 +1,4 @@
-import type { TypedHc } from "@magrev/backend/client";
+import type { TypedHc } from "@maglev/backend/client";
 
 import { hc } from "hono/client";
 import React, { createContext, useContext } from "react";

@@ -17,7 +17,7 @@ app.use("/api/*", async (c, next) => {
 
   const token = authHeader.split(" ")[1];
 
-  if (token !== c.env.MAGREV_TOKEN) {
+  if (token !== c.env.MAGLEV_TOKEN) {
     throw new HTTPException(403, { message: "Invalid token" });
   }
 

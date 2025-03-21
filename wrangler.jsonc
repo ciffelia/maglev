@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "magrev",
+  "name": "maglev",
   "main": "packages/backend/src/index.ts",
   "compatibility_date": "2025-03-17",
   "assets": {
@@ -13,8 +13,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "magrev",
-      "database_id": "b6d509ff-2c5a-4319-8e78-13f7759ccef4",
+      "database_name": "maglev",
+      "database_id": "506fa9ac-add6-49dc-9f64-0989f7d0a50a",
       "migrations_dir": "packages/backend/migrations",
     },
   ],

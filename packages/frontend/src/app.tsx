@@ -29,7 +29,7 @@ const Contents: React.FC = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography component="div" sx={{ flexGrow: 1 }} variant="h6">
-            Magrev Dashboard
+            Maglev Dashboard
           </Typography>
           <SettingsButton />
         </Toolbar>

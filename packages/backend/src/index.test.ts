@@ -54,7 +54,7 @@ const testAuthErrors = (method: string, url: string) => {
 };
 
 const authHeaders = {
-  Authorization: `Bearer ${env.MAGREV_TOKEN}`,
+  Authorization: `Bearer ${env.MAGLEV_TOKEN}`,
 };
 
 describe("GET /api/ping", () => {
