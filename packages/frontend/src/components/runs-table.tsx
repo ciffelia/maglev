@@ -18,9 +18,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { format } from "date-fns";
+import { useState } from "react";
 
 import type { useRuns } from "../api/use-runs";
 
@@ -29,6 +31,12 @@ import { unreachable } from "../util";
 export const RunsTable: React.FC<{
   runs: Exclude<ReturnType<typeof useRuns>["data"], undefined>;
 }> = ({ runs }) => {
+  const [isTestNameExpanded, setIsTestNameExpanded] = useState(false);
+
+  const toggleTestNameExpanded = () => {
+    setIsTestNameExpanded((prev) => !prev);
+  };
+
   if (runs.length === 0) {
     return (
       <Box sx={{ p: 2, textAlign: "center" }}>
@@ -57,9 +65,16 @@ export const RunsTable: React.FC<{
           <TableRow>
             <TableCell />
             <TableCell>Commit</TableCell>
-            {testNameList.map((testName) => (
+            {testNameList.map((testName, i) => (
               <TableCell align="center" key={testName}>
-                {testName}
+                <Tooltip title={isTestNameExpanded ? i : testName}>
+                  <Box
+                    onClick={toggleTestNameExpanded}
+                    sx={{ cursor: "pointer" }}
+                  >
+                    {isTestNameExpanded ? testName : i}
+                  </Box>
+                </Tooltip>
               </TableCell>
             ))}
           </TableRow>
@@ -83,7 +98,7 @@ export const RunsTable: React.FC<{
                 const result = run.results[testName];
                 return (
                   <TableCell align="center" key={testName}>
-                    {result ? (
+                    {result && (
                       <Box
                         sx={{
                           display: "flex",
@@ -98,8 +113,6 @@ export const RunsTable: React.FC<{
                           </Typography>
                         )}
                       </Box>
-                    ) : (
-                      "-"
                     )}
                   </TableCell>
                 );
