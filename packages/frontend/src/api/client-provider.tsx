@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import type { TypedHc } from "@magrev/backend/client";
 
 import { hc } from "hono/client";

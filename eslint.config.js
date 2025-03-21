@@ -3,7 +3,6 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 import perfectionist from "eslint-plugin-perfectionist";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
 import unicorn from "eslint-plugin-unicorn";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -19,7 +18,6 @@ export default tseslint.config(
       unicorn.configs.recommended,
       jsxA11y.flatConfigs.recommended,
       reactHooks.configs["recommended-latest"],
-      reactRefresh.configs.vite,
     ],
     files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
@@ -40,9 +38,14 @@ export default tseslint.config(
       ...react.configs["jsx-runtime"].rules,
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        { allowNumber: true },
+      ],
       "react/jsx-no-target-blank": "off",
       "unicorn/better-regex": "error",
       "unicorn/custom-error-definition": "error",
+      "unicorn/prefer-global-this": "off",
       "unicorn/prefer-query-selector": "off",
       "unicorn/prevent-abbreviations": "off",
     },
