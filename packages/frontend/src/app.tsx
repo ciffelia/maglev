@@ -1,12 +1,15 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import {
+  Alert,
+  AppBar,
+  Box,
+  CircularProgress,
+  Container,
+  CssBaseline,
+  Paper,
+  ThemeProvider,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
 import { ClientProvider } from "./api/client-provider";
