@@ -1,3 +1,4 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -12,12 +13,16 @@ import { ClientProvider } from "./api/client-provider";
 import { useRuns } from "./api/use-runs";
 import { RunsTable } from "./components/runs-table";
 import { SettingsButton } from "./components/settings-modal";
+import { theme } from "./theme";
 
 const App: React.FC = () => {
   return (
-    <ClientProvider>
-      <Contents />
-    </ClientProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ClientProvider>
+        <Contents />
+      </ClientProvider>
+    </ThemeProvider>
   );
 };
 
