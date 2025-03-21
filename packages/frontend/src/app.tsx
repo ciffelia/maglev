@@ -11,6 +11,7 @@ import React from "react";
 import { ClientProvider } from "./api/client-provider";
 import { useRuns } from "./api/use-runs";
 import { RunsTable } from "./components/runs-table";
+import { SettingsButton } from "./components/settings-modal";
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const Contents: React.FC = () => {
           <Typography component="div" sx={{ flexGrow: 1 }} variant="h6">
             Magrev Dashboard
           </Typography>
+          <SettingsButton />
         </Toolbar>
       </AppBar>
       <Container maxWidth="xl" sx={{ flexGrow: 1, mb: 4, mt: 4 }}>
