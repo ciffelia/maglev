@@ -1,4 +1,4 @@
-import { useLocalStorage } from "../hooks/use-local-storage";
+import { useLocalStorage } from "../utils/use-local-storage";
 
 interface UseAuth {
   setToken: (token?: string) => void;

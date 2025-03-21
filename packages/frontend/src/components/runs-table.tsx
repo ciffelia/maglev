@@ -26,8 +26,8 @@ import { format, formatDistanceStrict } from "date-fns";
 
 import type { useConfig, useRuns } from "../api/hooks";
 
-import { useNow } from "../now-provider";
-import { unreachable } from "../util";
+import { useNow } from "../utils/now-provider";
+import { unreachable } from "../utils/unreachable";
 
 export const RunsTable: React.FC<{
   config: ReturnType<typeof useConfig>["data"];

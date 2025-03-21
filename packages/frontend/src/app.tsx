@@ -6,7 +6,6 @@ import {
   Container,
   CssBaseline,
   FormControlLabel,
-  FormGroup,
   Paper,
   Switch,
   ThemeProvider,
@@ -19,8 +18,8 @@ import { ClientProvider } from "./api/client-provider";
 import { useConfig, useRuns } from "./api/hooks";
 import { RunsTable } from "./components/runs-table";
 import { SettingsButton } from "./components/settings-modal";
-import { NowProvider } from "./now-provider";
 import { theme } from "./theme";
+import { NowProvider } from "./utils/now-provider";
 
 const App: React.FC = () => {
   return (
