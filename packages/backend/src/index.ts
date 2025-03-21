@@ -104,8 +104,9 @@ const route = app
       const [meta] = await db.select().from(schema.meta);
       const revision = (meta ?? defaultMeta).revision;
       if (ifNoneMatch === `W/"${revision}"`) {
+        // Casting to never so that the response type doesn't include null.
         // eslint-disable-next-line unicorn/no-null
-        return c.body(null, 304);
+        return c.body(null, 304) as never;
       }
     }
 
