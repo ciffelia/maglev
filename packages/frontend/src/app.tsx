@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { SWRConfig } from "swr";
 
 import { ClientProvider } from "./api/client-provider";
 import { useConfig, useRuns } from "./api/hooks";
@@ -25,11 +26,13 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NowProvider>
-        <ClientProvider>
-          <Contents />
-        </ClientProvider>
-      </NowProvider>
+      <SWRConfig value={{ refreshInterval: 5000 }}>
+        <NowProvider>
+          <ClientProvider>
+            <Contents />
+          </ClientProvider>
+        </NowProvider>
+      </SWRConfig>
     </ThemeProvider>
   );
 };
