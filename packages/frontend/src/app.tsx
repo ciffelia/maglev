@@ -36,7 +36,7 @@ const Contents: React.FC = () => {
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography component="div" sx={{ flexGrow: 1 }} variant="h6">
+          <Typography component="h1" sx={{ flexGrow: 1 }} variant="h6">
             Maglev Dashboard
           </Typography>
           <SettingsButton />

@@ -60,7 +60,7 @@ export const RunsTable: React.FC<{
 
   return (
     <TableContainer component={Paper} elevation={0}>
-      <Table stickyHeader>
+      <Table aria-label="Test runs" stickyHeader>
         <TableHead>
           <TableRow>
             <TableCell />
