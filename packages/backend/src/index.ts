@@ -26,8 +26,8 @@ app.use("/api/*", async (c, next) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const route = app
-  .get("/api/ping", (c) => {
-    return c.json({ name: "Cloudflare" });
+  .get("/api/v1/config", (c) => {
+    return c.json({ github_repo_url: c.env.GITHUB_REPO_URL });
   })
   .post(
     "/api/v1/result",

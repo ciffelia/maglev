@@ -57,19 +57,21 @@ const authHeaders = {
   Authorization: `Bearer ${env.AUTH_TOKEN}`,
 };
 
-describe("GET /api/ping", () => {
-  it("responds with name", async () => {
+describe("GET /api/v1/config", () => {
+  it("returns GitHub repository URL", async () => {
     const ctx = createExecutionContext();
     const client = createClient(ctx);
 
-    const response = await client.api.ping.$get(undefined, {
+    const response = await client.api.v1.config.$get(undefined, {
       headers: authHeaders,
     });
 
     await waitOnExecutionContext(ctx);
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toStrictEqual({ name: "Cloudflare" });
+    expect(await response.json()).toStrictEqual({
+      github_repo_url: env.GITHUB_REPO_URL,
+    });
   });
 
   testAuthErrors("GET", "/api/ping");
