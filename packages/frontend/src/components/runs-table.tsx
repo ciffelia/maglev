@@ -8,6 +8,7 @@ export const RunsTable = () => {
   }
 
   if (error) {
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     return <div>Error: {String(error)}</div>;
   }
 
