@@ -63,7 +63,7 @@ export const RunsTable: React.FC<{
       <Table aria-label="Test runs" stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell sx={{ width: "max-content" }} />
             <TableCell>Commit</TableCell>
             {testNameList.map((testName, i) => (
               <TableCell align="center" key={testName}>
@@ -71,6 +71,7 @@ export const RunsTable: React.FC<{
                   <Box
                     onClick={toggleTestNameExpanded}
                     sx={{ cursor: "pointer" }}
+                    width="max-content"
                   >
                     {isTestNameExpanded ? testName : i}
                   </Box>
@@ -83,16 +84,23 @@ export const RunsTable: React.FC<{
           {runs.map((run) => (
             <TableRow hover key={run.id}>
               <TableCell>
-                {format(new Date(run.started_at * 1000), "yyyy-MM-dd HH:mm:ss")}
-                <IconButton aria-label="Log" color="inherit" size="large">
-                  <NotesIcon />
-                </IconButton>
+                <Box width="max-content">
+                  {format(
+                    new Date(run.started_at * 1000),
+                    "yyyy-MM-dd HH:mm:ss",
+                  )}
+                  <IconButton aria-label="Log" color="inherit" size="large">
+                    <NotesIcon />
+                  </IconButton>
+                </Box>
               </TableCell>
               <TableCell>
-                {run.commit.slice(0, 7)}
-                <IconButton aria-label="Commit" color="inherit" size="large">
-                  <CommitIcon />
-                </IconButton>
+                <Box width="max-content">
+                  {run.commit.slice(0, 7)}
+                  <IconButton aria-label="Commit" color="inherit" size="large">
+                    <CommitIcon />
+                  </IconButton>
+                </Box>
               </TableCell>
               {testNameList.map((testName) => {
                 const result = run.results[testName];
