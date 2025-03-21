@@ -1,18 +1,11 @@
-import { useRuns } from "../api/use-runs";
+import type React from "react";
 
-export const RunsTable = () => {
-  const { data: runs, error, isLoading } = useRuns();
+import type { useRuns } from "../api/use-runs";
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    return <div>Error: {String(error)}</div>;
-  }
-
-  if (!runs || runs.length === 0) {
+export const RunsTable: React.FC<{
+  runs: Exclude<ReturnType<typeof useRuns>["data"], undefined>;
+}> = ({ runs }) => {
+  if (runs.length === 0) {
     return <div>テスト実行データがありません</div>;
   }
 
