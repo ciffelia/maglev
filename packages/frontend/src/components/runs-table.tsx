@@ -22,23 +22,18 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { format } from "date-fns";
-import { useState } from "react";
+import { format, formatDistanceStrict } from "date-fns";
 
 import type { useConfig, useRuns } from "../api/hooks";
 
+import { useNow } from "../now-provider";
 import { unreachable } from "../util";
 
 export const RunsTable: React.FC<{
   config: ReturnType<typeof useConfig>["data"];
+  isExpanded?: boolean;
   runs: Exclude<ReturnType<typeof useRuns>["data"], undefined>;
-}> = ({ config, runs }) => {
-  const [isTestNameExpanded, setIsTestNameExpanded] = useState(false);
-
-  const toggleTestNameExpanded = () => {
-    setIsTestNameExpanded((prev) => !prev);
-  };
-
+}> = ({ config, isExpanded = false, runs }) => {
   if (runs.length === 0) {
     return (
       <Box sx={{ p: 2, textAlign: "center" }}>
@@ -69,14 +64,8 @@ export const RunsTable: React.FC<{
             <TableCell>Commit</TableCell>
             {testNameList.map((testName, i) => (
               <TableCell align="center" key={testName}>
-                <Tooltip title={isTestNameExpanded ? i : testName}>
-                  <Box
-                    onClick={toggleTestNameExpanded}
-                    sx={{ cursor: "pointer" }}
-                    whiteSpace="nowrap"
-                  >
-                    {isTestNameExpanded ? testName : i}
-                  </Box>
+                <Tooltip title={isExpanded ? i : testName}>
+                  <Box whiteSpace="nowrap">{isExpanded ? testName : i}</Box>
                 </Tooltip>
               </TableCell>
             ))}
@@ -87,10 +76,7 @@ export const RunsTable: React.FC<{
             <TableRow hover key={run.id}>
               <TableCell>
                 <Box whiteSpace="nowrap">
-                  {format(
-                    new Date(run.started_at * 1000),
-                    "yyyy-MM-dd HH:mm:ss",
-                  )}
+                  <FormattedTime date={new Date(run.started_at * 1000)} />
                   {config?.github_repo_url && (
                     <Link
                       href={`${config.github_repo_url}/actions/runs/${run.id}`}
@@ -183,4 +169,17 @@ const StatusIcon = ({
       return unreachable(status);
     }
   }
+};
+
+export const FormattedTime: React.FC<{ date: Date }> = ({ date }) => {
+  const now = useNow();
+
+  const absolute = format(date, "yyyy-MM-dd HH:mm:ss");
+  const relative =
+    now &&
+    formatDistanceStrict(date, now, {
+      addSuffix: true,
+    });
+
+  return relative ? `${absolute} (${relative})` : absolute;
 };

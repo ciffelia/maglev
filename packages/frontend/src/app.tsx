@@ -5,26 +5,32 @@ import {
   CircularProgress,
   Container,
   CssBaseline,
+  FormControlLabel,
+  FormGroup,
   Paper,
+  Switch,
   ThemeProvider,
   Toolbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 import { ClientProvider } from "./api/client-provider";
 import { useConfig, useRuns } from "./api/hooks";
 import { RunsTable } from "./components/runs-table";
 import { SettingsButton } from "./components/settings-modal";
+import { NowProvider } from "./now-provider";
 import { theme } from "./theme";
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ClientProvider>
-        <Contents />
-      </ClientProvider>
+      <NowProvider>
+        <ClientProvider>
+          <Contents />
+        </ClientProvider>
+      </NowProvider>
     </ThemeProvider>
   );
 };
@@ -50,6 +56,8 @@ const Contents: React.FC = () => {
 };
 
 const Main: React.FC = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const { data: config } = useConfig();
   const { data: runs, error, isLoading } = useRuns();
 
@@ -71,8 +79,21 @@ const Main: React.FC = () => {
   }
 
   return (
-    <Paper elevation={2} sx={{ mt: 2, p: 2 }}>
-      <RunsTable config={config} runs={runs ?? []} />
-    </Paper>
+    <>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={isExpanded}
+            onChange={(e) => {
+              setIsExpanded(e.target.checked);
+            }}
+          />
+        }
+        label="Display test names"
+      />
+      <Paper elevation={2} sx={{ mt: 2, p: 2 }}>
+        <RunsTable config={config} isExpanded={isExpanded} runs={runs ?? []} />
+      </Paper>
+    </>
   );
 };
