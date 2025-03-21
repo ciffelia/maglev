@@ -202,30 +202,27 @@ describe("GET /api/v1/run", () => {
       {
         commit: "def456",
         id: "run-123",
-        results: [
-          {
+        results: {
+          "test-1": {
             duration: 1000,
             status: "success",
-            test_name: "test-1",
           },
-          {
+          "test-2": {
             duration: 2000,
             status: "failure",
-            test_name: "test-2",
           },
-        ],
+        },
         started_at: 1_742_397_129 + 86_400 * 2,
       },
       {
         commit: "ghi789",
         id: "run-456",
-        results: [
-          {
+        results: {
+          "test-3": {
             duration: 3000,
             status: "running",
-            test_name: "test-3",
           },
-        ],
+        },
         started_at: 1_742_397_129,
       },
     ]);

@@ -1,5 +1,4 @@
 import { zValidator } from "@hono/zod-validator";
-import { asc, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
@@ -88,29 +87,33 @@ const route = app
     const db = drizzle(c.env.DB);
 
     const [runs, results] = await db.batch([
-      db.select().from(schema.runs).orderBy(desc(schema.runs.started_at)),
-      db
-        .select()
-        .from(schema.results)
-        .orderBy(desc(schema.results.run_id), asc(schema.results.test_name)),
+      db.select().from(schema.runs),
+      db.select().from(schema.results),
     ]);
 
-    const resultsByRunId = new Map<
-      string,
-      Omit<typeof schema.results.$inferSelect, "run_id">[]
-    >();
-    for (const result of results) {
-      const { run_id: execution_id, ...rest } = result;
-      if (!resultsByRunId.has(execution_id)) {
-        resultsByRunId.set(execution_id, []);
-      }
-      resultsByRunId.get(execution_id)?.push(rest);
+    interface RunWithResults {
+      commit: string;
+      id: string;
+      results: Record<
+        string,
+        Omit<typeof schema.results.$inferSelect, "run_id" | "test_name">
+      >;
+      started_at: number;
     }
 
-    const runsWithResults = runs.map((run) => ({
-      ...run,
-      results: resultsByRunId.get(run.id) ?? [],
-    }));
+    const runsWithResultsById = new Map<string, RunWithResults>();
+    for (const run of runs) {
+      runsWithResultsById.set(run.id, { results: {}, ...run });
+    }
+
+    for (const result of results) {
+      const { run_id, test_name, ...rest } = result;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      runsWithResultsById.get(run_id)!.results[test_name] = rest;
+    }
+
+    const runsWithResults = [...runsWithResultsById.values()];
+    runsWithResults.sort((a, b) => b.started_at - a.started_at);
 
     return c.json(runsWithResults);
   });
