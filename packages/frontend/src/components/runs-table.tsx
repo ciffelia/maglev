@@ -1,8 +1,11 @@
 import type React from "react";
 
+import CommitIcon from "@mui/icons-material/Commit";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import NotesIcon from "@mui/icons-material/Notes";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,6 +14,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import { format } from "date-fns";
 
 import type { useRuns } from "../api/use-runs";
 
@@ -40,12 +44,11 @@ export const RunsTable: React.FC<{
 
   return (
     <TableContainer component={Paper} elevation={0}>
-      <Table size="medium" sx={{ minWidth: 650 }}>
+      <Table stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell>Run ID</TableCell>
+            <TableCell />
             <TableCell>Commit</TableCell>
-            <TableCell>Start</TableCell>
             {testNameList.map((testName) => (
               <TableCell key={testName}>{testName}</TableCell>
             ))}
@@ -54,9 +57,18 @@ export const RunsTable: React.FC<{
         <TableBody>
           {runs.map((run) => (
             <TableRow hover key={run.id}>
-              <TableCell>{run.id}</TableCell>
-              <TableCell>{run.commit}</TableCell>
-              <TableCell>{new Date(run.started_at).toLocaleString()}</TableCell>
+              <TableCell>
+                {format(new Date(run.started_at * 1000), "yyyy-MM-dd HH:mm:ss")}
+                <IconButton aria-label="Log" color="inherit" size="large">
+                  <NotesIcon />
+                </IconButton>
+              </TableCell>
+              <TableCell>
+                {run.commit.slice(0, 7)}
+                <IconButton aria-label="Commit" color="inherit" size="large">
+                  <CommitIcon />
+                </IconButton>
+              </TableCell>
               {testNameList.map((testName) => {
                 const result = run.results[testName];
                 return (
