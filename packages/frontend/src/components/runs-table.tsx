@@ -1,19 +1,23 @@
 import type React from "react";
 
-import CommitIcon from "@mui/icons-material/Commit";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import NotesIcon from "@mui/icons-material/Notes";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
+import {
+  Commit as CommitIcon,
+  InfoOutlined as InfoOutlinedIcon,
+  Notes as NotesIcon,
+} from "@mui/icons-material";
+import {
+  Box,
+  Chip,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { format } from "date-fns";
 
 import type { useRuns } from "../api/use-runs";
