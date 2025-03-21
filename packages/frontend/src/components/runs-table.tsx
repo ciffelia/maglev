@@ -11,6 +11,7 @@ import {
 import {
   Box,
   IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -24,13 +25,14 @@ import {
 import { format } from "date-fns";
 import { useState } from "react";
 
-import type { useRuns } from "../api/use-runs";
+import type { useConfig, useRuns } from "../api/hooks";
 
 import { unreachable } from "../util";
 
 export const RunsTable: React.FC<{
+  config: ReturnType<typeof useConfig>["data"];
   runs: Exclude<ReturnType<typeof useRuns>["data"], undefined>;
-}> = ({ runs }) => {
+}> = ({ config, runs }) => {
   const [isTestNameExpanded, setIsTestNameExpanded] = useState(false);
 
   const toggleTestNameExpanded = () => {
@@ -89,17 +91,35 @@ export const RunsTable: React.FC<{
                     new Date(run.started_at * 1000),
                     "yyyy-MM-dd HH:mm:ss",
                   )}
-                  <IconButton aria-label="Log" color="inherit" size="large">
-                    <NotesIcon />
-                  </IconButton>
+                  {config?.github_repo_url && (
+                    <Link
+                      href={`${config.github_repo_url}/actions/runs/${run.id}`}
+                      target="_blank"
+                    >
+                      <IconButton aria-label="Log" color="inherit" size="large">
+                        <NotesIcon />
+                      </IconButton>
+                    </Link>
+                  )}
                 </Box>
               </TableCell>
               <TableCell>
                 <Box whiteSpace="nowrap">
                   {run.commit.slice(0, 7)}
-                  <IconButton aria-label="Commit" color="inherit" size="large">
-                    <CommitIcon />
-                  </IconButton>
+                  {config?.github_repo_url && (
+                    <Link
+                      href={`${config.github_repo_url}/commit/${run.commit}`}
+                      target="_blank"
+                    >
+                      <IconButton
+                        aria-label="Commit"
+                        color="inherit"
+                        size="large"
+                      >
+                        <CommitIcon />
+                      </IconButton>
+                    </Link>
+                  )}
                 </Box>
               </TableCell>
               {testNameList.map((testName) => {

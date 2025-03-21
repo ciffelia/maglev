@@ -13,7 +13,7 @@ import {
 import React from "react";
 
 import { ClientProvider } from "./api/client-provider";
-import { useRuns } from "./api/use-runs";
+import { useConfig, useRuns } from "./api/hooks";
 import { RunsTable } from "./components/runs-table";
 import { SettingsButton } from "./components/settings-modal";
 import { theme } from "./theme";
@@ -50,6 +50,7 @@ const Contents: React.FC = () => {
 };
 
 const Main: React.FC = () => {
+  const { data: config } = useConfig();
   const { data: runs, error, isLoading } = useRuns();
 
   if (isLoading) {
@@ -71,7 +72,7 @@ const Main: React.FC = () => {
 
   return (
     <Paper elevation={2} sx={{ mt: 2, p: 2 }}>
-      <RunsTable runs={runs ?? []} />
+      <RunsTable config={config} runs={runs ?? []} />
     </Paper>
   );
 };
