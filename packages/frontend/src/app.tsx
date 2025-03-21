@@ -42,7 +42,7 @@ const Contents: React.FC = () => {
           <SettingsButton />
         </Toolbar>
       </AppBar>
-      <Container maxWidth="xl" sx={{ flexGrow: 1, mb: 4, mt: 4 }}>
+      <Container maxWidth={false} sx={{ flexGrow: 1, mb: 4, mt: 4 }}>
         <Main />
       </Container>
     </Box>
