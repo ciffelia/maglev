@@ -17,7 +17,6 @@ app.use("/api/*", async (c, next) => {
   }
 
   const token = authHeader.split(" ")[1];
-
   if (token !== c.env.AUTH_TOKEN) {
     throw new HTTPException(403, { message: "Invalid token" });
   }
