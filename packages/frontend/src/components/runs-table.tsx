@@ -1,12 +1,33 @@
 import type React from "react";
 
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+
 import type { useRuns } from "../api/use-runs";
 
 export const RunsTable: React.FC<{
   runs: Exclude<ReturnType<typeof useRuns>["data"], undefined>;
 }> = ({ runs }) => {
   if (runs.length === 0) {
-    return <div>テスト実行データがありません</div>;
+    return (
+      <Box sx={{ p: 2, textAlign: "center" }}>
+        <InfoOutlinedIcon
+          sx={{ color: "text.secondary", fontSize: 40, mb: 1 }}
+        />
+        <Typography color="text.secondary" variant="body1">
+          No runs found
+        </Typography>
+      </Box>
+    );
   }
 
   const testNameSet = new Set<string>();
@@ -18,96 +39,87 @@ export const RunsTable: React.FC<{
   const testNameList = [...testNameSet].sort();
 
   return (
-    <table style={{ borderCollapse: "collapse", width: "100%" }}>
-      <thead>
-        <tr>
-          <th style={cellStyle}>実行ID</th>
-          <th style={cellStyle}>コミット</th>
-          <th style={cellStyle}>開始時間</th>
-          {testNameList.map((testName) => (
-            <th key={testName} style={cellStyle}>
-              {testName}
-            </th>
+    <TableContainer component={Paper} elevation={0}>
+      <Table size="medium" sx={{ minWidth: 650 }}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Run ID</TableCell>
+            <TableCell>Commit</TableCell>
+            <TableCell>Start</TableCell>
+            {testNameList.map((testName) => (
+              <TableCell key={testName}>{testName}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {runs.map((run) => (
+            <TableRow hover key={run.id}>
+              <TableCell>{run.id}</TableCell>
+              <TableCell>{run.commit}</TableCell>
+              <TableCell>{new Date(run.started_at).toLocaleString()}</TableCell>
+              {testNameList.map((testName) => {
+                const result = run.results[testName];
+                return (
+                  <TableCell key={testName}>
+                    {result ? (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 0.5,
+                        }}
+                      >
+                        <StatusChip status={result.status} />
+                        {result.duration !== null && (
+                          <Typography color="text.secondary" variant="caption">
+                            {result.duration}ms
+                          </Typography>
+                        )}
+                      </Box>
+                    ) : (
+                      "-"
+                    )}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
           ))}
-        </tr>
-      </thead>
-      <tbody>
-        {runs.map((run) => (
-          <tr key={run.id}>
-            <td style={cellStyle}>{run.id}</td>
-            <td style={cellStyle}>{run.commit}</td>
-            <td style={cellStyle}>
-              {new Date(run.started_at).toLocaleString()}
-            </td>
-            {testNameList.map((testName) => {
-              const result = run.results[testName];
-              return (
-                <td key={testName} style={cellStyle}>
-                  {result ? (
-                    <div>
-                      <StatusBadge status={result.status} />
-                      {result.duration !== null && (
-                        <div>{result.duration}ms</div>
-                      )}
-                    </div>
-                  ) : (
-                    "-"
-                  )}
-                </td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
-const cellStyle = {
-  border: "1px solid #ddd",
-  padding: "8px",
-  textAlign: "left" as const,
-};
-
-const StatusBadge = ({
+const StatusChip = ({
   status,
 }: {
   status: "failure" | "running" | "success";
 }) => {
-  let backgroundColor;
-  const textColor = "white";
+  let color: "error" | "info" | "success";
+  let label: string;
 
   switch (status) {
     case "failure": {
-      backgroundColor = "#F44336"; // 赤
+      color = "error";
+      label = "失敗";
       break;
     }
     case "running": {
-      backgroundColor = "#2196F3"; // 青
+      color = "info";
+      label = "実行中";
       break;
     }
     case "success": {
-      backgroundColor = "#4CAF50"; // 緑
+      color = "success";
+      label = "成功";
       break;
     }
     default: {
-      backgroundColor = "#9E9E9E"; // グレー
+      color = "info";
+      label = status;
       break;
     }
   }
 
-  return (
-    <span
-      style={{
-        backgroundColor,
-        borderRadius: "4px",
-        color: textColor,
-        display: "inline-block",
-        fontSize: "0.8em",
-        padding: "3px 6px",
-      }}
-    >
-      {status}
-    </span>
-  );
+  return <Chip color={color} label={label} size="small" />;
 };
