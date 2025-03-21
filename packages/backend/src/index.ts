@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 
+import { defaultMeta } from "./db/meta";
 import * as schema from "./db/schema";
 
 const app = new Hono<{ Bindings: Env }>();
@@ -48,7 +49,19 @@ const route = app
       const body = c.req.valid("json");
       const db = drizzle(c.env.DB);
 
+      const revision = crypto.randomUUID();
+
       await db.batch([
+        db
+          .insert(schema.meta)
+          .values({
+            ...defaultMeta,
+            revision,
+          })
+          .onConflictDoUpdate({
+            set: { revision },
+            target: schema.meta.id,
+          }),
         db
           .insert(schema.runs)
           .values({
@@ -86,7 +99,18 @@ const route = app
   .get("/api/v1/run", async (c) => {
     const db = drizzle(c.env.DB);
 
-    const [runs, results] = await db.batch([
+    const ifNoneMatch = c.req.header("If-None-Match");
+    if (ifNoneMatch !== undefined) {
+      const [meta] = await db.select().from(schema.meta);
+      const revision = (meta ?? defaultMeta).revision;
+      if (ifNoneMatch === `W/"${revision}"`) {
+        // eslint-disable-next-line unicorn/no-null
+        return c.body(null, 304);
+      }
+    }
+
+    const [[meta], runs, results] = await db.batch([
+      db.select().from(schema.meta),
       db.select().from(schema.runs),
       db.select().from(schema.results),
     ]);
@@ -115,6 +139,7 @@ const route = app
     const runsWithResults = [...runsWithResultsById.values()];
     runsWithResults.sort((a, b) => b.started_at - a.started_at);
 
+    c.header("ETag", `W/"${(meta ?? defaultMeta).revision}"`);
     return c.json(runsWithResults);
   });
 

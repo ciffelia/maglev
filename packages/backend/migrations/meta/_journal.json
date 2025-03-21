@@ -15,6 +15,13 @@
       "when": 1742471452512,
       "tag": "0001_bouncy_starhawk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1742573905412,
+      "tag": "0002_high_rick_jones",
+      "breakpoints": true
     }
   ]
 }

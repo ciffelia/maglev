@@ -1,9 +1,20 @@
+import { sql } from "drizzle-orm";
 import {
+  check,
   integer,
   primaryKey,
   sqliteTable,
   text,
 } from "drizzle-orm/sqlite-core";
+
+export const meta = sqliteTable(
+  "meta",
+  {
+    id: integer("id").primaryKey().default(0),
+    revision: text("revision").notNull(),
+  },
+  (table) => [check("id", sql`${table.id} = 0`)],
+);
 
 export const runs = sqliteTable("runs", {
   commit: text("commit").notNull(),
